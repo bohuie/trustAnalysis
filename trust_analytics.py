@@ -11,12 +11,7 @@ class TrustAnalytics:
     def __init__(self):
         self.results = pd.read_csv("survey-results.csv")
 
-    def clean_csv(self):
-        results = self.results
-        results.dropna(subset=["Q38"], inplace=True)
-        return results
-
-    def cultural_background(self):
+    def res_cultural_background(self):
         results = self.results
         culback = (
             results["Cultural Background"]
@@ -27,28 +22,28 @@ class TrustAnalytics:
         # df['Cast'].str.split(',').explode('Cast').value_counts()
         return culback
 
-    def accuracy_skill(self):
-        results = self.results
+    def col_accuracy_skill(self):
+        """
+        Creates a column for accuracy in data skills, adds it to `self.results`, and returns a column of accuracy results.
 
+        """
+        results = self.results
         answers = ["4", "Math", "No", "Yes"]
+        accuracy = []
 
         df_accuracy = results[["Q22", "Q24", "Q25", "Q26"]].copy()
         df_accuracy["Q22"] = df_accuracy["Q22"].apply(str)
 
-        accuracy = []
-
         for index, row in df_accuracy.iterrows():
             correct = answers == row.values
-            accuracy.append(correct.sum() / correct.size)
+            accuracy.append((correct.sum() / correct.size) * 100)
 
-        df_accuracy = df_accuracy.assign(skill_accuracy=accuracy)
-        df_accuracy = df_accuracy.drop(columns=["Q22", "Q24", "Q25", "Q26"])
-        #df_accuracy.to_csv("accuracy_skill.csv")
-        # print(df_accuracy['skill_accuracy'].value_counts())
+        col_q26 = self.results.columns.get_loc("Q26")
+        self.results.insert(col_q26 + 1, "skill_accuracy", accuracy)
 
-        return df_accuracy
+        return accuracy
 
-    def accuracy_team(self):
+    def col_accuracy_team(self):
         results = self.results
 
         answers = ["Team A", "Team B"]
@@ -62,12 +57,12 @@ class TrustAnalytics:
 
         df_accuracy = df_accuracy.assign(team_accuracy=accuracy)
         df_accuracy = df_accuracy.drop(columns=["Q29", "Q30"])
-        #df_accuracy.to_csv("accuracy_team.csv")
+        # df_accuracy.to_csv("accuracy_team.csv")
         # print(df_accuracy['team_accuracy'].value_counts())
 
         return df_accuracy
 
-    def accuracy_class(self):
+    def col_accuracy_class(self):
         results = self.results
 
         answers = (
@@ -83,15 +78,17 @@ class TrustAnalytics:
 
         df_accuracy = df_accuracy.assign(class_accuracy=accuracy)
         df_accuracy = df_accuracy.drop(columns=["Q31"])
-        #df_accuracy.to_csv("accuracy_class.csv")
+        # df_accuracy.to_csv("accuracy_class.csv")
         # print(df_accuracy['class_accuracy'].value_counts())
 
         return df_accuracy
 
+    """
+    # Commented out for now, 2024-01-28
     def combine_accuracy(self):
-        acc_skill = self.accuracy_skill()
-        acc_team = self.accuracy_team()
-        acc_class = self.accuracy_class()
+        acc_skill = self.col_accuracy_skill()
+        acc_team = self.col_accuracy_team()
+        acc_class = self.col_accuracy_class()
 
         result = pd.concat(
             [
@@ -104,3 +101,4 @@ class TrustAnalytics:
         #result.to_csv("accuracy.csv")
 
         return result
+    """
