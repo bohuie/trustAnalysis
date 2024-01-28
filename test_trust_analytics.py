@@ -1,12 +1,12 @@
 import unittest
 import pandas as pd
-from trust_viz_analytics import TrustVizAnalytics
+from trust_analytics import TrustAnalytics
 
 
 class TestTrustVizAnalytics(unittest.TestCase):
     def setUp(self):
         self.results = pd.read_csv("survey-results.csv")
-        self.tva = TrustVizAnalytics()
+        self.tva = TrustAnalytics()
         self.results = self.tva.clean_csv()
 
     def test_clean_csv(self):

@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-class TrustVizAnalytics:
+class TrustAnalytics:
     """
     A class for analyzing the results of the Trust Viz survey.
     Jan 2024
@@ -43,7 +43,7 @@ class TrustVizAnalytics:
 
         df_accuracy = df_accuracy.assign(skill_accuracy=accuracy)
         df_accuracy = df_accuracy.drop(columns=["Q22", "Q24", "Q25", "Q26"])
-        df_accuracy.to_csv("accuracy_skill.csv")
+        #df_accuracy.to_csv("accuracy_skill.csv")
         # print(df_accuracy['skill_accuracy'].value_counts())
 
         return df_accuracy
@@ -62,7 +62,7 @@ class TrustVizAnalytics:
 
         df_accuracy = df_accuracy.assign(team_accuracy=accuracy)
         df_accuracy = df_accuracy.drop(columns=["Q29", "Q30"])
-        df_accuracy.to_csv("accuracy_team.csv")
+        #df_accuracy.to_csv("accuracy_team.csv")
         # print(df_accuracy['team_accuracy'].value_counts())
 
         return df_accuracy
@@ -83,7 +83,7 @@ class TrustVizAnalytics:
 
         df_accuracy = df_accuracy.assign(class_accuracy=accuracy)
         df_accuracy = df_accuracy.drop(columns=["Q31"])
-        df_accuracy.to_csv("accuracy_class.csv")
+        #df_accuracy.to_csv("accuracy_class.csv")
         # print(df_accuracy['class_accuracy'].value_counts())
 
         return df_accuracy
