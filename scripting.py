@@ -5,7 +5,7 @@ df = pd.read_csv('/Users/jayati/Downloads/Trust & Visualization Survey_January 2
 
 # Create a new column for accuracy rate
 total_questions = 2  # Assuming two questions: Q78 and Q95
-df['Accuracy_Rat1'] = 0.0
+df['Accuracy_Rate1'] = 0.0
 df['Accuracy_Rate2'] = 0.0
 df['Accuracy_Rate3'] = 0.0
 df['Accuracy_Rate4'] = 0.0
@@ -29,7 +29,6 @@ for index, row in df.iterrows():
     if row['Q84'] == 'I would not remove anyone' or row['Q100'] == 'I would remove Ray':
         df.at[index, 'Accuracy_Rate3'] = 50
 
-
     if row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" and row['Q102'] == 'Yes, Tim should move to Team 18':
         df.at[index, 'Accuracy_Rate4'] = 100
     elif row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" or row['Q102'] == 'Yes, Tim should move to Team 18':
@@ -49,8 +48,15 @@ for index, row in df.iterrows():
 
     
 
+# Create new columns for average accuracy rates
+df['Avg_Accuracy_Rate_1_2'] = df[['Accuracy_Rate1', 'Accuracy_Rate2']].mean(axis=1)
+df['Avg_Accuracy_Rate_3_4'] = df[['Accuracy_Rate3', 'Accuracy_Rate4']].mean(axis=1)
+df['Avg_Accuracy_Rate_5_6'] = df[['Accuracy_Rate5', 'Accuracy_Rate6']].mean(axis=1)
+
 # Display the relevant information
-result_df = df[['Q78', 'Q95', 'Accuracy_Rate1','Q96', 'Q97', 'Accuracy_Rate2','Q84', 'Q100', 'Accuracy_Rate3', 'Q101', 'Q102', 'Accuracy_Rate4','Q107', 'Q108', 'Accuracy_Rate5', 'Q109', 'Q110', 'Accuracy_Rate6']]
+result_df = df[['num','Q78', 'Q95', 'Accuracy_Rate1', 'Q96', 'Q97', 'Accuracy_Rate2', 'Q84', 'Q100', 'Accuracy_Rate3',
+                 'Q101', 'Q102', 'Accuracy_Rate4', 'Q107', 'Q108', 'Accuracy_Rate5', 'Q109', 'Q110', 'Accuracy_Rate6',
+                 'Avg_Accuracy_Rate_1_2', 'Avg_Accuracy_Rate_3_4', 'Avg_Accuracy_Rate_5_6']]
 print(result_df)
 
 # Save the result to a new CSV file
