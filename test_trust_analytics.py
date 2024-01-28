@@ -12,6 +12,11 @@ class TestTrustAnalytics(unittest.TestCase):
         results = self.tva.res_cultural_background()
         # print(results)
 
+    def test_col_ai_exp_rating(self):
+        print()
+        results = self.tva.col_ai_exp_rating()
+        # print(results)
+
     def test_col_team_exp_rating(self):
         print()
         results = self.tva.col_team_exp_rating()

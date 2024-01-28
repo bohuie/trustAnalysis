@@ -22,6 +22,35 @@ class TrustAnalytics:
         # df['Cast'].str.split(',').explode('Cast').value_counts()
         return culback
 
+    def col_ai_exp_rating(self):
+        """
+        Takes the results from Q45 and Q46, and returns a rating for AI experience.
+
+        """
+        q45_res = self.results["Q45"]
+        q46_res = self.results["Q46"]
+
+        ai_exp = []
+        counter = 0
+
+        for i in range(len(q45_res)):
+            q45 = q45_res[i]
+            q46 = q46_res[i].count(",") + 1
+            if (q45 != "No" and not pd.isna(q45)) and q46 >= 3:
+                ai_exp.append("HIGH")
+            elif q46 >= 5:
+                ai_exp.append("HIGH")
+                counter += 1
+            else:
+                ai_exp.append("LOW")
+
+        self.results.insert(1, "ai_exp_rating", ai_exp)
+
+        # print(pd.DataFrame(ai_exp).value_counts())
+        # print("COUNT: ", counter)
+
+        return ai_exp
+
     def col_team_exp_rating(self):
         """
         Takes the results from Q14 and gives a rating for team formation experience.
@@ -32,11 +61,10 @@ class TrustAnalytics:
         team_exp = []
 
         for i in range(len(q14_res)):
-            # print(type(q14_res[i]))
             if pd.isna(q14_res[i]):
-                team_exp.append("NO EXP")
+                team_exp.append("LOW")
             else:
-                team_exp.append("EXP")
+                team_exp.append("HIGH")
 
         self.results.insert(1, "team_exp_rating", team_exp)
         # print(self.results.iloc[:, [0,1,2,3,4]])
