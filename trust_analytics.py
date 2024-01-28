@@ -44,44 +44,49 @@ class TrustAnalytics:
         return accuracy
 
     def col_accuracy_team(self):
-        results = self.results
+        """
+        Creates a column for accuracy in team data skills, adds it to `self.results`, and returns a column of accuracy results.
 
+        """
+        results = self.results
         answers = ["Team A", "Team B"]
+        accuracy = []
 
         df_accuracy = results[["Q29", "Q30"]].copy()
-        accuracy = []
 
         for index, row in df_accuracy.iterrows():
             correct = answers == row.values
-            accuracy.append(correct.sum() / correct.size)
+            accuracy.append((correct.sum() / correct.size) * 100)
 
-        df_accuracy = df_accuracy.assign(team_accuracy=accuracy)
-        df_accuracy = df_accuracy.drop(columns=["Q29", "Q30"])
-        # df_accuracy.to_csv("accuracy_team.csv")
-        # print(df_accuracy['team_accuracy'].value_counts())
+        col_q30 = self.results.columns.get_loc("Q30")
+        self.results.insert(col_q30 + 1, "team_accuracy", accuracy)
 
-        return df_accuracy
+        # print(self.results.iloc[:, [col_q30 - 2, col_q30 - 1, col_q30, col_q30 +1, col_q30+2]])
+
+        return accuracy
 
     def col_accuracy_class(self):
-        results = self.results
+        """
+        Creates a column for accuracy in class data skills, adds it to `self.results`, and returns a column of accuracy results.
 
+        """
+        results = self.results
         answers = (
             "Most teams seem to have a good spread of members with different majors."
         )
-
-        df_accuracy = results[["Q31"]].copy()
         accuracy = []
+        df_accuracy = results[["Q31"]].copy()
 
         for index, row in df_accuracy.iterrows():
             correct = answers == row.values
-            accuracy.append(correct.sum() / correct.size)
+            accuracy.append((correct.sum() / correct.size) * 100)
 
-        df_accuracy = df_accuracy.assign(class_accuracy=accuracy)
-        df_accuracy = df_accuracy.drop(columns=["Q31"])
-        # df_accuracy.to_csv("accuracy_class.csv")
-        # print(df_accuracy['class_accuracy'].value_counts())
+        col_q31 = self.results.columns.get_loc("Q31")
+        self.results.insert(col_q31 + 1, "class_accuracy", accuracy)
 
-        return df_accuracy
+        # print(self.results.iloc[:, [col_q31 - 2, col_q31 - 1, col_q31, col_q31 +1, col_q31+2]])
+
+        return accuracy
 
     """
     # Commented out for now, 2024-01-28
