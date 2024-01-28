@@ -21,12 +21,12 @@ for index, row in df.iterrows():
     
     if row['Q96'] == 'No, Minh should not move to Team 12' and row['Q97'] == 'Yes, Nia should move to Team 14':
         df.at[index, 'Accuracy_Rate2'] = 100
-    if row['Q96'] == 'No, Minh should not move to Team 12' or row['Q97'] == 'Yes, Nia should move to Team 14':
+    elif row['Q96'] == 'No, Minh should not move to Team 12' or row['Q97'] == 'Yes, Nia should move to Team 14':
         df.at[index, 'Accuracy_Rate2'] = 50
 
     if row['Q84'] == 'I would not remove anyone' and row['Q100'] == 'I would remove Ray':
         df.at[index, 'Accuracy_Rate3'] = 100
-    if row['Q84'] == 'I would not remove anyone' or row['Q100'] == 'I would remove Ray':
+    elif row['Q84'] == 'I would not remove anyone' or row['Q100'] == 'I would remove Ray':
         df.at[index, 'Accuracy_Rate3'] = 50
 
     if row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" and row['Q102'] == 'Yes, Tim should move to Team 18':
