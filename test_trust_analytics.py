@@ -7,6 +7,11 @@ class TestTrustAnalytics(unittest.TestCase):
     def setUp(self):
         self.tva = TrustAnalytics()
 
+    def test_res_experience_table(self):
+        print()
+        results = self.tva.res_experience_table()
+        print(results)
+
     def test_res_cultural_background(self):
         print()
         results = self.tva.res_cultural_background()

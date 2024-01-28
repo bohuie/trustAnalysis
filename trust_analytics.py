@@ -11,6 +11,16 @@ class TrustAnalytics:
     def __init__(self):
         self.results = pd.read_csv("survey-results.csv")
 
+    def res_experience_table(self):
+        exp_table = pd.DataFrame()
+        exp_table["data_skill_rating"] = self.col_data_skill_rating()
+        exp_table["ai_experience"] = self.col_ai_exp_rating()
+        exp_table["team_experience"] = self.col_team_exp_rating()
+
+        # exp_table.to_csv("exp_table.csv")
+
+        return exp_table
+
     def res_cultural_background(self):
         results = self.results
         culback = (
