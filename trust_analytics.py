@@ -101,6 +101,6 @@ class TrustAnalytics:
             ],
             axis=1,
         )
-        result.to_csv("accuracy.csv")
+        #result.to_csv("accuracy.csv")
 
         return result
