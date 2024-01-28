@@ -22,6 +22,30 @@ class TrustAnalytics:
         # df['Cast'].str.split(',').explode('Cast').value_counts()
         return culback
 
+    def col_data_skill_rating(self):
+        """
+        Takes the results of the accuracy measures and returns an accuracy rating, adding it back to `self.results`
+
+        """
+        acc_skill = self.col_accuracy_skill()
+        acc_team = self.col_accuracy_team()
+        acc_class = self.col_accuracy_class()
+
+        results = self.results
+        acc_rating = []
+
+        for i in range(len(acc_skill)):
+            if acc_skill[i] == 100 and acc_team[i] == 100 and acc_class[i] == 100:
+                acc_rating.append("HIGH")
+            else:
+                acc_rating.append("LOW")
+        self.results.insert(1, "data_skill_rating", acc_rating)
+
+        # print(pd.DataFrame(acc_rating).value_counts())
+        # print(results.iloc[:, [0,1,2,3,4]])
+
+        return acc_rating
+
     def col_accuracy_skill(self):
         """
         Creates a column for accuracy in data skills, adds it to `self.results`, and returns a column of accuracy results.
@@ -87,23 +111,3 @@ class TrustAnalytics:
         # print(self.results.iloc[:, [col_q31 - 2, col_q31 - 1, col_q31, col_q31 +1, col_q31+2]])
 
         return accuracy
-
-    """
-    # Commented out for now, 2024-01-28
-    def combine_accuracy(self):
-        acc_skill = self.col_accuracy_skill()
-        acc_team = self.col_accuracy_team()
-        acc_class = self.col_accuracy_class()
-
-        result = pd.concat(
-            [
-                acc_skill["skill_accuracy"],
-                acc_team["team_accuracy"],
-                acc_class["class_accuracy"],
-            ],
-            axis=1,
-        )
-        #result.to_csv("accuracy.csv")
-
-        return result
-    """
