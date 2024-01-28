@@ -1,4 +1,7 @@
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.stats as stats
 
 # Load your dataset
 df = pd.read_csv('/Users/jayati/Downloads/survey-results.csv')
@@ -29,10 +32,13 @@ for index, row in df.iterrows():
     elif row['Q84'] == 'I would not remove anyone' or row['Q100'] == 'I would remove Ray':
         df.at[index, 'Accuracy_Rate3'] = 50
 
-    if row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" and row['Q102'] == 'Yes, Tim should move to Team 18':
+    # if row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" and row['Q102'] == 'Yes, Tim should move to Team 18':
+    #     df.at[index, 'Accuracy_Rate4'] = 100
+    # elif row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" or row['Q102'] == 'Yes, Tim should move to Team 18':
+    #     df.at[index, 'Accuracy_Rate4'] = 50
+        
+    if row['Q102'] == 'Yes, Tim should move to Team 18':
         df.at[index, 'Accuracy_Rate4'] = 100
-    elif row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" or row['Q102'] == 'Yes, Tim should move to Team 18':
-        df.at[index, 'Accuracy_Rate4'] = 50
 
     # Question 107 and 108
     if row['Q107'] == 'I would remove Val' and row['Q108'] == 'I would not remove anyone':
