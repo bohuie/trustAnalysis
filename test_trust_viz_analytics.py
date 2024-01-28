@@ -2,6 +2,7 @@ import unittest
 import pandas as pd
 from trust_viz_analytics import TrustVizAnalytics
 
+
 class TestTrustVizAnalytics(unittest.TestCase):
     def setUp(self):
         self.results = pd.read_csv("survey-results.csv")
@@ -13,11 +14,11 @@ class TestTrustVizAnalytics(unittest.TestCase):
 
     def test_cultural_background(self):
         results = self.tva.cultural_background()
-        #print(results)
+        # print(results)
 
     def test_accuracy_skill(self):
         results = self.tva.accuracy_skill()
-        #print(results)
+        # print(results)
 
     def test_accuracy_team(self):
         results = self.tva.accuracy_team()
