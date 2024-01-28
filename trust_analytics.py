@@ -22,6 +22,27 @@ class TrustAnalytics:
         # df['Cast'].str.split(',').explode('Cast').value_counts()
         return culback
 
+    def col_team_exp_rating(self):
+        """
+        Takes the results from Q14 and gives a rating for team formation experience.
+
+        """
+
+        q14_res = self.results["Q14"]
+        team_exp = []
+
+        for i in range(len(q14_res)):
+            # print(type(q14_res[i]))
+            if pd.isna(q14_res[i]):
+                team_exp.append("NO EXP")
+            else:
+                team_exp.append("EXP")
+
+        self.results.insert(1, "team_exp_rating", team_exp)
+        # print(self.results.iloc[:, [0,1,2,3,4]])
+
+        return team_exp
+
     def col_data_skill_rating(self):
         """
         Takes the results of the accuracy measures and returns an accuracy rating, adding it back to `self.results`
@@ -42,7 +63,7 @@ class TrustAnalytics:
         self.results.insert(1, "data_skill_rating", acc_rating)
 
         # print(pd.DataFrame(acc_rating).value_counts())
-        # print(results.iloc[:, [0,1,2,3,4]])
+        # print(self.results.iloc[:, [0,1,2,3,4]])
 
         return acc_rating
 
