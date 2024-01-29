@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import scipy.stats as stats
 
 # Load your dataset
-df = pd.read_csv('/Users/jayati/Downloads/survey-results.csv')
+df = pd.read_csv('/Users/jayati/trustAnalysis/survey-results.csv')
 
 # Create a new column for accuracy rate
 total_questions = 2  # Assuming two questions: Q78 and Q95
