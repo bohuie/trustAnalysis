@@ -32,13 +32,10 @@ for index, row in df.iterrows():
     elif row['Q84'] == 'I would not remove anyone' or row['Q100'] == 'I would remove Ray':
         df.at[index, 'Accuracy_Rate3'] = 50
 
-    # if row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" and row['Q102'] == 'Yes, Tim should move to Team 18':
-    #     df.at[index, 'Accuracy_Rate4'] = 100
-    # elif row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" or row['Q102'] == 'Yes, Tim should move to Team 18':
-    #     df.at[index, 'Accuracy_Rate4'] = 50
-        
-    if row['Q102'] == 'Yes, Tim should move to Team 18':
+    if row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" and row['Q102'] == 'Yes, Tim should move to Team 18':
         df.at[index, 'Accuracy_Rate4'] = 100
+    elif row['Q101'] == "It doesn't matter: the change is very minor and it may create other problems" or row['Q102'] == 'Yes, Tim should move to Team 18':
+        df.at[index, 'Accuracy_Rate4'] = 50
 
     # Question 107 and 108
     if row['Q107'] == 'I would remove Val' and row['Q108'] == 'I would not remove anyone':
@@ -62,7 +59,7 @@ df['Avg_Accuracy_Rate_5_6'] = df[['Accuracy_Rate5', 'Accuracy_Rate6']].mean(axis
 # Display the relevant information
 result_df = df[['num','Q78', 'Q95', 'Accuracy_Rate1', 'Q96', 'Q97', 'Accuracy_Rate2', 'Q84', 'Q100', 'Accuracy_Rate3',
                  'Q101', 'Q102', 'Accuracy_Rate4', 'Q107', 'Q108', 'Accuracy_Rate5', 'Q109', 'Q110', 'Accuracy_Rate6',
-                 'Avg_Accuracy_Rate_1_2', 'Avg_Accuracy_Rate_3_4', 'Avg_Accuracy_Rate_5_6']]
+                 'Avg_Accuracy_Rate_1_2', 'Avg_Accuracy_Rate_3_4', 'Avg_Accuracy_Rate_5_6','team_exp_rating', 'ai_exp_rating', 'data_skill_rating']]
 print(result_df)
 
 # Save the result to a new CSV file
