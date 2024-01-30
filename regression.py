@@ -34,9 +34,6 @@ categories = [
 for category in categories:
     df["q13_" + category.replace(" ", "_")] = df['Q13'].apply(lambda x: 1 if category in x else 0)
 experience_cols = ["q13_" + category.replace(" ", "_") for category in categories]
-df['Experience_BinaryNumber'] = df[experience_cols].astype(str).agg(''.join, axis=1)
-df['Experience_BinaryNumberInt'] = df['Experience_BinaryNumber'].apply(lambda x: int(x, 2))
-
 
 ai_topics = [
     "search and optimization",
@@ -56,8 +53,6 @@ ai_topics = [
 for topic in ai_topics:
     df["q46_" + topic.replace(" ", "_")] = df['Q46'].apply(lambda x: 1 if topic in x else 0)
 ai_topic_cols = ["q46_" + topic.replace(" ", "_") for topic in ai_topics]
-df['AI_BinaryNumber'] = df[ai_topic_cols].astype(str).agg(''.join, axis=1)
-df['AI_BinaryNumberInt'] = df['AI_BinaryNumber'].apply(lambda x: int(x, 2))
 
 
 choices = [
@@ -73,21 +68,21 @@ choices = [
 for choice in choices:
     df["q38_" + choice.replace(" ", "_")] = df['Q38'].apply(lambda x: 1 if choice in x else 0)
 choices_cols = ["q38_" + choice.replace(" ", "_") for choice in choices]
-df['choices_BinaryNumber'] = df[choices_cols].astype(str).agg(''.join, axis=1)
-df['choices_BinaryNumberInt'] = df['choices_BinaryNumber'].apply(lambda x: int(x, 2))
 
-result_df = pd.concat([df['num'], df[experience_cols], df['Experience_BinaryNumber'], df['Experience_BinaryNumberInt'],df[ai_topic_cols], df["AI_BinaryNumber"], df["AI_BinaryNumberInt"], df["choices_BinaryNumber"],df["choices_BinaryNumberInt"], df[choices_cols],df['CorrectAnswers']], axis=1)
+
+result_df = pd.concat([df['num'], df[experience_cols], df[ai_topic_cols], df[choices_cols],df['CorrectAnswers']], axis=1)
 print(result_df)
 
 result_df.to_csv('regressionresults.csv', index=False)
 
 resultdf = pd.read_csv('/Users/jayati/trustAnalysis/regressionresults.csv')
 
+#Avg_Accuracy_Rate_1_2	Avg_Accuracy_Rate_3_4	Avg_Accuracy_Rate_5_6
 
 target_variables = ['Avg_Accuracy_Rate_1_2', 'Avg_Accuracy_Rate_3_4', 'Avg_Accuracy_Rate_5_6', 'AverageOverall']
 
 for target_variable in target_variables:
-    X = pd.concat([df['Experience_BinaryNumberInt'],df['AI_BinaryNumberInt'],df['choices_BinaryNumberInt'], df['CorrectAnswers']], axis=1)
+    X = pd.concat([df[experience_cols], df[ai_topic_cols], df[choices_cols], df['CorrectAnswers']], axis=1)
     y = df[target_variable]
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
